@@ -14,6 +14,30 @@
         <input type="password" required name="password-cnf" minlength="8" value="" placeholder="Confirm password"
             class="form-input" onkeyup="validateConfirmPassword()">
         <div id='message'></div>
+
+        <!-- Show server errors -->
+        <?php
+            if (isset($_GET['error'])){
+                if ($_GET['error'] == 'emptyfields') {
+                    echo "<div class='err-message'>Fill in all fields.</div>";
+                }
+                if ($_GET['error'] == 'invalidemail') {
+                    echo "<div class='err-message'>Please enter a valid email address.</div>";
+                }
+                if ($_GET['error'] == 'passwordcheck') {
+                    echo "<div class='err-message'>Passwords does not match.</div>";
+                }
+                if ($_GET['error'] == 'sqlerror') {
+                    echo "<div class='err-message'>A DB error occured. Sorry for the inconvinience.</div>";
+                }
+                if ($_GET['error'] == 'usertaken') {
+                    echo "<div class='err-message'>This username is already taken.</div>";
+                }
+                if ($_GET['error'] == 'emailtaken') {
+                    echo "<div class='err-message'>User with this email already exists.</div>";
+                }
+            }
+        ?>
         <button type="submit" name="register-submit" class="form-button">Register</button>
     </form>
 </main>

@@ -1,0 +1,12 @@
+.err-message {
+  color: red;
+  margin: 1rem !important;
+}
+
+.success-msg {
+  text-align: center;
+  background-color: green;
+  color: white;
+  font-weight: bold;
+  padding: 1rem;
+}

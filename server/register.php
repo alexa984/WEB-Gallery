@@ -14,11 +14,6 @@ if (isset($_POST['register-submit'])){
         header("Location: ../client/register.php?error=emptyfields&username=".$username."&email=".$email);
         exit();
     }
-    else if (!filter_var($email, FILTER_VALIDATE_EMAIL) && !preg_match("/^[a-zA-Z0-9]*$/", $username)) {
-        # Attach errors for invalid email and username
-        header("Location: ../client/register.php?error=invalidemailusername");
-        exit();
-    }
     else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         # Attach errors for invalid email
         header("Location: ../client/register.php?error=invalidemail&username=".$username);
@@ -84,7 +79,7 @@ if (isset($_POST['register-submit'])){
                             mysqli_stmt_execute($insertStatement);
                             mysqli_stmt_store_result($insertStatement);
 
-                            header("Location: ../client/index.php?register=success");
+                            header("Location: ../client/index.php?success=register");
                             exit();
                         }
                     }

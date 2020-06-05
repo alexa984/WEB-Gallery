@@ -7,11 +7,20 @@
 
 <head>
     <meta charset='utf-8'>
-    <title></title>
+    <title>Image gallery</title>
     <link rel="stylesheet" type="text/css" href="css/nav.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" type="text/css" href="css/register.css">
     <link rel="stylesheet" type="text/css" href="css/footer.css">
+    <script type="text/javascript">
+    const loadMessagesCss = () => {
+        let newStyleSheet = document.createElement('link');
+        newStyleSheet.rel = 'stylesheet';
+        newStyleSheet.href = 'css/messages.css';
+        document.getElementsByTagName("head")[0].appendChild(newStyleSheet);
+    }
+    window.addEventListener('load', loadMessagesCss);
+    </script>
 </head>
 
 <body>

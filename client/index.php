@@ -2,6 +2,13 @@
     require "header.php";
 ?>
 
+<?php
+    if (isset($_GET['success'])){
+        if ($_GET['success'] == 'register') {
+            echo '<div class="success-msg">You have successfully created your profile.</div>';
+        }
+    }
+?>
 <main class="container">
     <?php
         if (isset($_SESSION['userId'])) {     
