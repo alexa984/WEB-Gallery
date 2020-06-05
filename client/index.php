@@ -8,7 +8,7 @@
             echo '<p>You are logged in!</p>';
         }
         else {
-            echo '<p>You are logged out! Please log in.</p>';
+            echo '<p>You are currently logged out. Please log in.</p>';
         }
     ?>
 </main>
