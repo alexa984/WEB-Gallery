@@ -3,7 +3,10 @@
 <head>
     <meta charset='utf-8'>
     <title></title>
-    <link rel="stylesheet" href="nav.css">
+    <link rel="stylesheet" type="text/css" href="css/nav.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/register.css">
+    <link rel="stylesheet" type="text/css" href="css/footer.css">
 </head>
 
 <body>
@@ -16,17 +19,14 @@
                 <li><a href="#">Profile</a></li>
                 <li id="inline-login">
                     <form action="includes/login.inc.php" method="post">
-                        <input type="text" name="username" value="" placeholder="Username">
-                        <input type="password" name="password" value="" placeholder="Password">
-                        <button type="submit" name="login" class="form-button">Login</button>
-                        <a href="signup.php" id="signup-link">Register</a>
+                        <input type="text" name="username" value="" placeholder="Username" class="form-input">
+                        <input type="password" name="password" value="" placeholder="Password" class="form-input">
+                        <button type="submit" name="login-submit" class="form-button">Login</button>
+                        <a href="register.php" id="register-link">Register</a>
                     </form>
                     <form action="includes/logout.inc.php" method="post">
-                        <button type="submit" name="login" class="form-button">Logout</button>
+                        <button type="submit" name="logout" class="form-button">Logout</button>
                     </form>
                 </li>
         </nav>
     </header>
-</body>
-
-</html>
