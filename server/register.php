@@ -1,6 +1,5 @@
 <?php
 if (isset($_POST['register-submit'])){
-    # Create connection to the db
     require 'dbhandler.php';
 
     $username = $_POST['username'];
