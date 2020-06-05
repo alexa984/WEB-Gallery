@@ -25,7 +25,7 @@
                         <a href="register.php" id="register-link">Register</a>
                     </form>
                     <form action="server/logout.php" method="post">
-                        <button type="submit" name="logout" class="form-button">Logout</button>
+                        <button type="submit" name="logout-submit" class="form-button">Logout</button>
                     </form>
                 </li>
         </nav>
