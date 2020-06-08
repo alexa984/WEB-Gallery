@@ -6,18 +6,18 @@
     if (isset($_GET['success'])){
         if ($_GET['success'] == 'register') {
             echo '<div class="success-msg">You have successfully created your profile.</div>';
+        } else if ($_GET['success'] == 'uploaded') {
+            echo '<div class="success-msg">You have successfully uploaded your image.</div>';
         }
     }
 ?>
 <main class="container">
-    <?php
-        if (isset($_SESSION['userId'])) {     
-            echo '<p>You are logged in!</p>';
-        }
-        else {
-            echo '<p>You are currently logged out. Please log in.</p>';
-        }
-    ?>
+    <form action="../server/upload.php" method="POST" enctype="multipart/form-data">
+        <input type="file" name="file">
+        <div>
+            <button type="submit" name="submit" class="form-button">Upload your image</button>
+        </div>
+    </form>
 </main>
 
 <?php 
