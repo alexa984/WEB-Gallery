@@ -3,6 +3,10 @@ Image gallery project for the FMI WEB course.
 The main idea is to have a web page with user registration and login. Each user is able to save his images in the page.
 There are options for uploading image, splitting images to albums(also automatically on some criteria), merging albums and deleting images/albums.
 
+# Prerequisites
+ - Installed XAMPP
+ - Pull this repo
+
 # Restore DB from the web_gallery.sql script
 1. Get to bin dir of mysql in your command prompt
 2. Login to mysql (ex. mysql -u root -p)
@@ -36,3 +40,8 @@ Increase number_instances of the Image
 We want the image to live in `All Images` even after removing from the Album.
 That's why the only thing we delete when removing from an album is the AlbumImage.
 TODO: Think about whether we should delete the whole album if there are no images in it or leave it empty
+
+
+# Test User credentials:
+username: test_user
+password: password123
