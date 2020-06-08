@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time:  5 юни 2020 в 22:44
+-- Generation Time:  8 юни 2020 в 21:14
 -- Версия на сървъра: 10.4.11-MariaDB
 -- PHP Version: 7.2.31
 
@@ -38,6 +38,19 @@ CREATE TABLE `albums` (
 -- --------------------------------------------------------
 
 --
+-- Структура на таблица `album_images`
+--
+
+CREATE TABLE `album_images` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `image_id` int(11) NOT NULL,
+  `album_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Структура на таблица `images`
 --
 
@@ -47,7 +60,8 @@ CREATE TABLE `images` (
   `camera` varchar(255) DEFAULT NULL,
   `filesize` float DEFAULT NULL,
   `numberInstances` int(11) NOT NULL DEFAULT 0,
-  `id` int(11) NOT NULL
+  `id` int(11) NOT NULL,
+  `original_filename` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -68,8 +82,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `password`) VALUES
-(1, 'test_user', 'alex_yovkova@abv.bg', '$2y$10$iRUbwBh/Q.lpoh9k4uRmG.wiXDdyh3bg7WfNdfcZhhG0i.cZwrt.C'),
-(2, 'aijovkova', 'alex.yovkova@gmail.com', '$2y$10$xe9v8lJjqkHZ5m5cXb1/.uk3BqDXCy7v65iZv5h054fcuwLp9Gzwe');
+(1, 'test_user', 'alex_yovkova@abv.bg', '$2y$10$iRUbwBh/Q.lpoh9k4uRmG.wiXDdyh3bg7WfNdfcZhhG0i.cZwrt.C');
 
 --
 -- Indexes for dumped tables
@@ -81,6 +94,15 @@ INSERT INTO `users` (`id`, `username`, `email`, `password`) VALUES
 ALTER TABLE `albums`
   ADD PRIMARY KEY (`id`),
   ADD KEY `userId` (`userId`);
+
+--
+-- Indexes for table `album_images`
+--
+ALTER TABLE `album_images`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `image_id` (`image_id`),
+  ADD KEY `album_id` (`album_id`);
 
 --
 -- Indexes for table `images`
@@ -128,6 +150,14 @@ ALTER TABLE `users`
 --
 ALTER TABLE `albums`
   ADD CONSTRAINT `albums_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`id`);
+
+--
+-- Ограничения за таблица `album_images`
+--
+ALTER TABLE `album_images`
+  ADD CONSTRAINT `album_images_ibfk_1` FOREIGN KEY (`album_id`) REFERENCES `albums` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `album_images_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `album_images_ibfk_3` FOREIGN KEY (`image_id`) REFERENCES `images` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
