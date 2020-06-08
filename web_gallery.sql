@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time:  8 юни 2020 в 21:14
+-- Generation Time:  8 юни 2020 в 22:51
 -- Версия на сървъра: 10.4.11-MariaDB
 -- PHP Version: 7.2.31
 
@@ -43,8 +43,7 @@ CREATE TABLE `albums` (
 
 CREATE TABLE `album_images` (
   `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `image_id` int(11) NOT NULL,
+  `image_instance_id` int(11) NOT NULL,
   `album_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -62,6 +61,18 @@ CREATE TABLE `images` (
   `numberInstances` int(11) NOT NULL DEFAULT 0,
   `id` int(11) NOT NULL,
   `original_filename` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Структура на таблица `image_instances`
+--
+
+CREATE TABLE `image_instances` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `image_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -100,9 +111,8 @@ ALTER TABLE `albums`
 --
 ALTER TABLE `album_images`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `image_id` (`image_id`),
-  ADD KEY `album_id` (`album_id`);
+  ADD KEY `album_id` (`album_id`),
+  ADD KEY `image_instance_id` (`image_instance_id`) USING BTREE;
 
 --
 -- Indexes for table `images`
@@ -110,6 +120,14 @@ ALTER TABLE `album_images`
 ALTER TABLE `images`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `imagePath` (`path`) USING HASH;
+
+--
+-- Indexes for table `image_instances`
+--
+ALTER TABLE `image_instances`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `image_id` (`image_id`);
 
 --
 -- Indexes for table `users`
@@ -156,8 +174,14 @@ ALTER TABLE `albums`
 --
 ALTER TABLE `album_images`
   ADD CONSTRAINT `album_images_ibfk_1` FOREIGN KEY (`album_id`) REFERENCES `albums` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `album_images_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `album_images_ibfk_3` FOREIGN KEY (`image_id`) REFERENCES `images` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `album_images_ibfk_3` FOREIGN KEY (`image_instance_id`) REFERENCES `image_instances` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ограничения за таблица `image_instances`
+--
+ALTER TABLE `image_instances`
+  ADD CONSTRAINT `image_instances_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `image_instances_ibfk_2` FOREIGN KEY (`image_id`) REFERENCES `images` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

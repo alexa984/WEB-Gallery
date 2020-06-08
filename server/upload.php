@@ -16,8 +16,8 @@ if (isset($_POST['submit'])) {
 
     if (in_array($fileExt, $allowed)) {
         if ($fileError === 0) {
-            // TODO: The following steps should be implemented right after we understand how to parse the metadata and hash the image content
-            // NOTE: Leave the steps from this comment after implementing this
+            // TODO: Database changes should be made on upload right after we understand how to parse the metadata
+            
             // 1. Hash the image content
             $hash = hash_file('sha256', $fileTmpName);
 
@@ -26,7 +26,7 @@ if (isset($_POST['submit'])) {
             $image_map = file_get_contents('./images/image_map.json');
             $json_assoc = json_decode($image_map, true);
 
-            // 3.1. If image content is not present, upload the file to the server and take the path from there
+            // 3.1. If image content is not present, upload the file to the server and take the path from the newly uploaded
             //      Parse the meta data so that we can give the information to the Image model
             //      Create an Image and ImageInstance with the expected data
             if (!isset($json_assoc[$hash])) {
@@ -43,7 +43,7 @@ if (isset($_POST['submit'])) {
             }
 
             // 3.2. If image content is present, take the image path from the JSON by the hash key
-            //      Get the Image instance which has this path. Create new ImageInstance with FK to this Image. 
+            //      Get the Image which has this path. Create new ImageInstance with FK to this Image. 
             //      Increase number_instances of the Image
             
             else {
