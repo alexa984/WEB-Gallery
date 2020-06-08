@@ -2,13 +2,13 @@
 if (isset($_POST['submit'])) {
     $file = $_FILES['file'];
 
-    $fileName = $file['name'];
+    $originalFilename = $file['name'];
     $fileTmpName = $file['tmp_name'];
     $fileSize = $file['size'];
     $fileError = $file['error'];
     $fileType = $file['type'];
 
-    $fileNameAndExt = explode('.', $fileName);
+    $fileNameAndExt = explode('.', $originalFilename);
     $realFilename = $fileNameAndExt[0];
     $fileExt = strtolower($fileNameAndExt[1]);
 
@@ -40,6 +40,18 @@ if (isset($_POST['submit'])) {
                 $json_assoc[$hash] = $filenameNew;
                 $json_data = json_encode($json_assoc);
                 file_put_contents('./images/image_map.json', $json_data);
+
+                // Parse the meta data from image
+                $meta = get_meta_tags($fileDestination);
+                $exif = exif_read_data($fileDestination);
+                if ($exif){
+                    $file_size = $exif['FILE']['FileSize'];
+                }
+                if ($meta) {
+                    $author = $meta['author'];
+                    $description = $meta['description'];
+                    $geolocation = $meta['geo_position'];
+                }
             }
 
             // 3.2. If image content is present, take the image path from the JSON by the hash key

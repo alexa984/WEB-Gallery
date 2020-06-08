@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time:  8 юни 2020 в 22:51
+-- Generation Time:  8 юни 2020 в 23:31
 -- Версия на сървъра: 10.4.11-MariaDB
 -- PHP Version: 7.2.31
 
@@ -56,11 +56,14 @@ CREATE TABLE `album_images` (
 CREATE TABLE `images` (
   `path` varchar(2048) NOT NULL,
   `timestamp` timestamp NULL DEFAULT NULL,
-  `camera` varchar(255) DEFAULT NULL,
+  `device` varchar(255) DEFAULT NULL,
   `filesize` float DEFAULT NULL,
   `numberInstances` int(11) NOT NULL DEFAULT 0,
   `id` int(11) NOT NULL,
-  `original_filename` varchar(255) NOT NULL
+  `original_filename` varchar(255) NOT NULL,
+  `author` varchar(255) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `geoposition` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
