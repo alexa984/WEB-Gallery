@@ -28,11 +28,15 @@
         <nav>
             <ul>
                 <li><a href="index.php">Home</a></li>
-                <li><a href="#">Albums</a></li>
-                <li><a href="#">All Images</a></li>
-                <li><a href="#">Profile</a></li>
-                <li id="inline-login">
-                    <?php
+                <?php
+                    if (isset($_SESSION['userId'])) {
+                        echo '<li><a href="#">Albums</a></li>
+                        <li><a href="all_images.php">All Images</a></li>
+                        <li><a href="#">Profile</a></li>
+                        <li id="inline-login">';
+                    } 
+                ?>
+                <?php
                     if (isset($_SESSION['userId'])) {     
                         echo "
                         <form action='../server/logout.php' method='post'>

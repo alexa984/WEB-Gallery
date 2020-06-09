@@ -44,8 +44,8 @@ if (isset($_POST['submit'])){
                 file_put_contents('./images/image_map.json', $json_data);
 
                 // Parse the meta data from image
-                $meta = get_meta_tags($fileDestination);
-                $exif = exif_read_data($fileDestination);
+                // $meta = get_meta_tags($fileDestination);
+                // $exif = exif_read_data($fileDestination);
                 // if ($exif){
                 //     $file_size = $exif['FILE']['FileSize'];
                 // }
