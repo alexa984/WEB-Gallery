@@ -1,7 +1,7 @@
-<?php
-if (isset($_POST['submit'])) {
+<?php 
+session_start();
+if (isset($_POST['submit'])){
     $file = $_FILES['file'];
-
     $originalFilename = $file['name'];
     $fileTmpName = $file['tmp_name'];
     $fileSize = $file['size'];
@@ -16,8 +16,10 @@ if (isset($_POST['submit'])) {
 
     if (in_array($fileExt, $allowed)) {
         if ($fileError === 0) {
-            // TODO: Database changes should be made on upload right after we understand how to parse the metadata
-            
+            require 'dbhandler.php';
+
+            $user_id= $_SESSION['userId'];
+                     
             // 1. Hash the image content
             $hash = hash_file('sha256', $fileTmpName);
 
@@ -32,7 +34,7 @@ if (isset($_POST['submit'])) {
             if (!isset($json_assoc[$hash])) {
                 // Upload the file to server
                 $filenameNew = uniqid($realFilename.'_').'.'.$fileExt;
-                $fileDestination = 'images/'.$filenameNew;
+                $fileDestination = './images/'.$filenameNew;
 
                 move_uploaded_file($fileTmpName, $fileDestination);
 
@@ -44,13 +46,30 @@ if (isset($_POST['submit'])) {
                 // Parse the meta data from image
                 $meta = get_meta_tags($fileDestination);
                 $exif = exif_read_data($fileDestination);
-                if ($exif){
-                    $file_size = $exif['FILE']['FileSize'];
-                }
-                if ($meta) {
-                    $author = $meta['author'];
-                    $description = $meta['description'];
-                    $geolocation = $meta['geo_position'];
+                // if ($exif){
+                //     $file_size = $exif['FILE']['FileSize'];
+                // }
+                // if ($meta) {
+                //     $author = $meta['author'];
+                //     $description = $meta['description'];
+                //     $geolocation = $meta['geo_position'];
+                // }
+                // TODO: Check isset for each meta field and insert it too
+                $sqlInsertImage = "INSERT INTO images (path, original_filename, number_instances) VALUES (?, ?, 1)";
+                $imageInsertStatement = mysqli_stmt_init($conn);
+                if (!mysqli_stmt_prepare($imageInsertStatement, $sqlInsertImage)) {
+                    header("Location: ../client/index.php?error=sqlerror3");
+                    exit();
+                } else {
+                    // Create an Image
+                    mysqli_stmt_bind_param($imageInsertStatement, "ss", $filenameNew, $originalFilename);
+                    mysqli_stmt_execute($imageInsertStatement);
+                    mysqli_stmt_store_result($imageInsertStatement);
+                    
+                    // Get the ID of the image we just uploaded
+                    $imageId = mysqli_insert_id($conn);
+
+                    create_image_instance($conn, $user_id, $imageId);
                 }
             }
 
@@ -59,11 +78,31 @@ if (isset($_POST['submit'])) {
             //      Increase number_instances of the Image
             
             else {
-                $fileDestination = $json_assoc[$hash];
+                $path_to_image = $json_assoc[$hash];
+                $sqlGetImage = "SELECT * FROM images WHERE path=?";
+                $imageGetStatement = mysqli_stmt_init($conn);
+
+                if (!mysqli_stmt_prepare($imageGetStatement, $sqlGetImage)) {
+                    header("Location: ../client/index.php?error=sqlerror4");
+                    exit();
+                } 
+                else {
+                    mysqli_stmt_bind_param($imageGetStatement, "s", $path_to_image);
+                    mysqli_stmt_execute($imageGetStatement);
+                    $image = mysqli_stmt_get_result($imageGetStatement);
+                    $imageRow = mysqli_fetch_assoc($image);
+
+                    create_image_instance($conn, $user_id, $imageRow['id']);
+
+                    $currNumInstances = $imageRow['number_instances'];
+                    
+                    increase_image_number_instances($conn, $imageRow['id'], $currNumInstances);
+                }
             }
             
             header("Location: ../client/index.php?success=uploaded");
-
+            mysqli_close($conn);
+            
         } else {
             echo "There was an error uploading your file.";
         }
@@ -71,4 +110,5 @@ if (isset($_POST['submit'])) {
     } else {
         echo "This file format is not allowed.";
     }
+
 }
