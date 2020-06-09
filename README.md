@@ -18,9 +18,11 @@ Open {your_project_root_folder}/client/index.php in XAMPP with running Apache an
 # Speifications on uploading image
 1. Hash the image content
 2. Check whether the hash is present on the server. For the check -> we have an image_map.json file storing the info in {image_hash: path_to_image} format
+
 3.1. If image content is not present, upload the file to the server and take the path from the newly uploaded.
 Parse the meta data so that we can give the information to the Image model
 Create an Image and ImageInstance with the expected data
+
 3.2. If image content is present, take the image path from the JSON by the hash key
 Get the Image which has this path. Create new ImageInstance with FK to this Image. 
 Increase number_instances of the Image
