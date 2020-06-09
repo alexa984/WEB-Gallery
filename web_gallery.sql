@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time:  8 юни 2020 в 23:31
+-- Generation Time: 10 юни 2020 в 00:04
 -- Версия на сървъра: 10.4.11-MariaDB
 -- PHP Version: 7.2.31
 
@@ -58,7 +58,7 @@ CREATE TABLE `images` (
   `timestamp` timestamp NULL DEFAULT NULL,
   `device` varchar(255) DEFAULT NULL,
   `filesize` float DEFAULT NULL,
-  `numberInstances` int(11) NOT NULL DEFAULT 0,
+  `number_instances` int(11) NOT NULL DEFAULT 0,
   `id` int(11) NOT NULL,
   `original_filename` varchar(255) NOT NULL,
   `author` varchar(255) DEFAULT NULL,
