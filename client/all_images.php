@@ -18,7 +18,7 @@
             mysqli_stmt_execute($statement);
             $result = mysqli_stmt_get_result($statement);
             while($row = mysqli_fetch_assoc($result)){
-                echo '<div><img width="300" height="300" src="../server/images/'.$row['path'].'"></div>';
+                echo '<span><img width="300" height="300" style="margin: 5px;" src="../server/images/'.$row['path'].'"></span>';
             }
         }
     }

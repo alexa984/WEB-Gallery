@@ -55,7 +55,7 @@ if (isset($_POST['submit'])){
                 //     $geolocation = $meta['geo_position'];
                 // }
                 // TODO: Check isset for each meta field and insert it too
-                $sqlInsertImage = "INSERT INTO images (path, original_filename, number_instances) VALUES (?, ?, 1)";
+                $sqlInsertImage = "INSERT INTO images (path, original_filename, number_instances) VALUES (?, ?, '1')";
                 $imageInsertStatement = mysqli_stmt_init($conn);
                 if (!mysqli_stmt_prepare($imageInsertStatement, $sqlInsertImage)) {
                     header("Location: ../client/index.php?error=sqlerror3");

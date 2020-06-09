@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 10 юни 2020 в 00:04
+-- Generation Time: 10 юни 2020 в 01:15
 -- Версия на сървъра: 10.4.11-MariaDB
 -- PHP Version: 7.2.31
 
@@ -154,7 +154,13 @@ ALTER TABLE `albums`
 -- AUTO_INCREMENT for table `images`
 --
 ALTER TABLE `images`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `image_instances`
+--
+ALTER TABLE `image_instances`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -177,7 +183,7 @@ ALTER TABLE `albums`
 --
 ALTER TABLE `album_images`
   ADD CONSTRAINT `album_images_ibfk_1` FOREIGN KEY (`album_id`) REFERENCES `albums` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `album_images_ibfk_3` FOREIGN KEY (`image_instance_id`) REFERENCES `image_instances` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `album_images_ibfk_2` FOREIGN KEY (`image_instance_id`) REFERENCES `image_instances` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ограничения за таблица `image_instances`
