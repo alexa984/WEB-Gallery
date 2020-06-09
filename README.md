@@ -8,7 +8,7 @@ There are options for uploading image, splitting images to albums(also automatic
  - Pull this repo
 
 # Restore DB from the web_gallery.sql script
-1. Get to bin dir of mysql in your command prompt
+1. Get to root dir of mysql in your command prompt
 2. Login to mysql (ex. mysql -u root -p)
 3. source {path_to_web_gallery.sql}
 
@@ -28,12 +28,19 @@ Increase number_instances of the Image
 # Speifications on deleting image(for specific user = ImageInstance)
 1. Get the selected ImageInstance
 2. Get the Image for this ImageInstance
+
 3.1. If Image has `number_instances == 1`:
+
       1) Remove the record for this image from the JSON file
+      
       2) Delete the Image. ImageInstance and all AlbumImages will be deleted by the CASCADE. 
+      
       3) Delete the image itself from the server `/images` folder
+      
 3.2. If Image `has num_instances > 1`:
+
       1) Delete selected ImageInstance
+      
       2) Decrease num_instances with 1
 
 # Speifications on removing image from specific Album
