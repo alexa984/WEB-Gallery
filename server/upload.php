@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 if (isset($_POST['submit'])){
     $file = $_FILES['file'];
@@ -43,26 +43,38 @@ if (isset($_POST['submit'])){
                 $json_data = json_encode($json_assoc);
                 file_put_contents('./images/image_map.json', $json_data);
 
-                // Parse the meta data from image
-                // $meta = get_meta_tags($fileDestination);
-                // $exif = exif_read_data($fileDestination);
-                // if ($exif){
-                //     $file_size = $exif['FILE']['FileSize'];
-                // }
-                // if ($meta) {
-                //     $author = $meta['author'];
-                //     $description = $meta['description'];
-                //     $geolocation = $meta['geo_position'];
-                // }
-                // TODO: Check isset for each meta field and insert it too
-                $sqlInsertImage = "INSERT INTO images (path, original_filename, number_instances) VALUES (?, ?, '1')";
+                // Parse the meta and exif data from image
+                $meta = get_meta_tags($fileDestination);
+                $exif = exif_read_data($fileDestination);
+                if (isset($meta['author'])) {
+                    $author = $meta['author'];
+                } else {
+                    $author = '';
+                }
+                if (isset($meta['description'])) {
+                    $description = $meta['description'];
+                } else {
+                    $description = '';
+                }
+
+                $sqlInsertImage = "INSERT INTO images (path, original_filename, number_instances, timestamp, filesize, author, description) 
+                                   VALUES (?, ?, '1', FROM_UNIXTIME(?), ?, ?, ?)";
+
                 $imageInsertStatement = mysqli_stmt_init($conn);
                 if (!mysqli_stmt_prepare($imageInsertStatement, $sqlInsertImage)) {
                     header("Location: ../client/index.php?error=sqlerror3");
                     exit();
                 } else {
                     // Create an Image
-                    mysqli_stmt_bind_param($imageInsertStatement, "ss", $filenameNew, $originalFilename);
+                    mysqli_stmt_bind_param(
+                        $imageInsertStatement, "ssiiss", 
+                        $filenameNew, 
+                        $originalFilename,
+                         $exif['FileDateTime'],
+                         $exif['FileSize'], 
+                         $author, 
+                         $description
+                    );
                     mysqli_stmt_execute($imageInsertStatement);
                     mysqli_stmt_store_result($imageInsertStatement);
                     
