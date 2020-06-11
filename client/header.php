@@ -30,7 +30,7 @@
                 <li><a href="index.php">Home</a></li>
                 <?php
                     if (isset($_SESSION['userId'])) {
-                        echo '<li><a href="#">Albums</a></li>
+                        echo '<li><a href="albums.php">Albums</a></li>
                         <li><a href="all_images.php">All Images</a></li>
                         <li><a href="#">Profile</a></li>
                         <li id="inline-login">';
