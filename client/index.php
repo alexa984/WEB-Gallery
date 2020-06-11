@@ -20,11 +20,11 @@
                     <button type="submit" name="submit" class="form-button">Upload your image</button>
                   </div>
               </form>';
-        for ($i = 0; $i <= 10; $i++) {
+        for ($i = 1; $i <= 10; $i++) {
             $todayYearsAgo = date("Y-m-d", strtotime("-$i years"));
             $query = "SELECT path FROM images WHERE
                         id IN (SELECT image_id FROM image_instances WHERE user_id=?
-                        AND timestamp BETWEEN '? 00:00:00' AND '? 23:59:59')";
+                        AND DATE(timestamp)=?)";
             $statement = mysqli_stmt_init($conn);
 
             if (!mysqli_stmt_prepare($statement, $query)) {
@@ -32,11 +32,11 @@
                 exit();
             }
             else {
-                mysqli_stmt_bind_param($statement, "iss", $_SESSION['userId'], $todayYearsAgo, $todayYearsAgo);
+                mysqli_stmt_bind_param($statement, "is", $_SESSION['userId'], $todayYearsAgo);
                 mysqli_stmt_execute($statement);
                 $result = mysqli_stmt_get_result($statement);
                 if (mysqli_num_rows($result) > 0) {
-                    echo "<h1>You have memories from this day $todayYearsAgo years ago. Check them out:<h1>";
+                    echo "<h2>You have memories from this day $i years ago. Check them out:<h2>";
                     while($row = mysqli_fetch_assoc($result)){
                         echo '<span><img width="30%" style="margin: 1%;" src="../server/images/'.$row['path'].'"></span>';
                     }
