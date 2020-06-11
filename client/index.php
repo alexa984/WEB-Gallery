@@ -22,9 +22,9 @@
               </form>';
         for ($i = 0; $i <= 10; $i++) {
             $todayYearsAgo = date("Y-m-d", strtotime("-$i years"));
-            $query = "SELECT path FROM images WHERE {
+            $query = "SELECT path FROM images WHERE
                         id IN (SELECT image_id FROM image_instances WHERE user_id=?
-                        AND timestamp BETWEEN '? 00:00:00' AND '? 23:59:59'";
+                        AND timestamp BETWEEN '? 00:00:00' AND '? 23:59:59')";
             $statement = mysqli_stmt_init($conn);
 
             if (!mysqli_stmt_prepare($statement, $query)) {
