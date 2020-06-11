@@ -21,6 +21,8 @@ SET time_zone = "+00:00";
 -- Database: `web_gallery`
 --
 
+CREATE DATABASE IF NOT EXISTS web_gallery DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE web_gallery;
 -- --------------------------------------------------------
 
 --
