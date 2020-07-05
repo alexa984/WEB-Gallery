@@ -8,23 +8,21 @@
     if (isset($_SESSION['userId'])){
         if (isset($_GET['id']) && $_GET['id']!="" && $_GET['name']!="") {
             // Detail of selected album
-            if ( isset($_SESSION['userId']) ) {
-                $query = "SELECT * FROM images WHERE id IN (SELECT image_id FROM image_instances WHERE user_id=? AND id IN (SELECT image_id FROM album_images WHERE album_id=?))";
-                $statement = mysqli_stmt_init($conn);
-        
-                if (!mysqli_stmt_prepare($statement, $query)) {
-                    header("Location: index.php?error=sqlerror");
-                    exit();
-                } 
-                else {
-                    mysqli_stmt_bind_param($statement, "ii", $_SESSION['userId'], $_GET['id']);
-                    mysqli_stmt_execute($statement);
-                    $result = mysqli_stmt_get_result($statement);
-
-                    echo '<h1>'.$_GET['name'].'</h1>';
-                    while($row = mysqli_fetch_assoc($result)){
-                        echo '<span><img width="30%" style="margin: 1%;" src="../server/images/'.$row['path'].'"></span>';
-                    }
+            $query = "SELECT * FROM images WHERE id IN (SELECT image_id FROM image_instances WHERE user_id=? AND id IN (SELECT image_id FROM album_images WHERE album_id=?))";
+            $statement = mysqli_stmt_init($conn);
+    
+            if (!mysqli_stmt_prepare($statement, $query)) {
+                header("Location: index.php?error=sqlerror");
+                exit();
+            } 
+            else {
+                mysqli_stmt_bind_param($statement, "ii", $_SESSION['userId'], $_GET['id']);
+                mysqli_stmt_execute($statement);
+                $result = mysqli_stmt_get_result($statement);
+                
+                echo '<h1>'.$_GET['name'].'</h1>';
+                while($row = mysqli_fetch_assoc($result)){
+                    echo '<span><img width="30%" style="margin: 1%;" src="../server/images/'.$row['path'].'"></span>';
                 }
             }
 
@@ -56,28 +54,3 @@
 <?php 
     require "footer.php";
 ?>
-
-
-
-<!-- <main class="container">
-    //<?php
-    // require "../../server/dbhandler.php";
-    // if (isset($_SESSION['userId'])){
-    //     $query = "SELECT * FROM images WHERE id IN (SELECT image_id FROM image_instances WHERE user_id=? AND id IN (SELECT image_id FROM album_images WHERE album_id=?))";
-    //     $statement = mysqli_stmt_init($conn);
-
-    //     if (!mysqli_stmt_prepare($statement, $query)) {
-    //         header("Location: index.php?error=sqlerror");
-    //         exit();
-    //     } 
-    //     else {
-    //         mysqli_stmt_bind_param($statement, "ii", $_SESSION['userId'], $_GET['id']);
-    //         mysqli_stmt_execute($statement);
-    //         $result = mysqli_stmt_get_result($statement);
-    //         while($row = mysqli_fetch_assoc($result)){
-    //             echo '<span><img width="30%" style="margin: 1%;" src="../server/images/'.$row['path'].'"></span>';
-    //         }
-    //     }
-    // }
-    // ?>
-</main> -->

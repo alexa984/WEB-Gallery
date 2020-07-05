@@ -1,5 +1,10 @@
 <?php
     session_start();
+    if (!isset($_SESSION['start_time']))
+    {
+        $str_time = time();
+        $_SESSION['start_time'] = $str_time;
+    }
 ?>
 
 <!DOCTYPE html>
@@ -32,7 +37,7 @@
                     if (isset($_SESSION['userId'])) {
                         echo '<li><a href="albums.php">Albums</a></li>
                         <li><a href="all_images.php">All Images</a></li>
-                        <li><a href="#">Profile</a></li>
+                        <li><a href="profile.php">Profile</a></li>
                         <li id="inline-login">';
                     } 
                 ?>
