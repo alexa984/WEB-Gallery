@@ -65,7 +65,7 @@ if (isset($_POST['register-submit'])){
                     }
                     else {
                         # Otherwise create new record in the DB
-                        $sqlInsert = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+                        $sqlInsert = "INSERT INTO users (username, email, password, date_registered) VALUES (?, ?, ?, ?)";
                         $insertStatement = mysqli_stmt_init($conn);
                         if (!mysqli_stmt_prepare($insertStatement, $sqlInsert)) {
                             header("Location: ../client/register.php?error=sqlerror");
@@ -75,7 +75,7 @@ if (isset($_POST['register-submit'])){
                             # Everything went well. Creating the user
                             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-                            mysqli_stmt_bind_param($insertStatement, "sss", $username, $email, $hashedPassword);
+                            mysqli_stmt_bind_param($insertStatement, "ssss", $username, $email, $hashedPassword, date("Y-m-d"));
                             mysqli_stmt_execute($insertStatement);
                             mysqli_stmt_store_result($insertStatement);
 

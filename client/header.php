@@ -12,11 +12,14 @@
 
 <head>
     <meta charset='utf-8'>
+    <!-- Can we make each page has its own title -->
     <title>Image gallery</title>
     <link rel="stylesheet" type="text/css" href="css/nav.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" type="text/css" href="css/register.css">
     <link rel="stylesheet" type="text/css" href="css/footer.css">
+    <link rel="stylesheet" type="text/css" href="css/modals.css">
+    <link rel="stylesheet" type="text/css" href="css/gallery.css">
     <script type="text/javascript">
     const loadMessagesCss = () => {
         let newStyleSheet = document.createElement('link');
@@ -26,6 +29,7 @@
     }
     window.addEventListener('load', loadMessagesCss);
     </script>
+    <script defer src="js/manage_modals.js"></script>
 </head>
 
 <body>

@@ -70,7 +70,7 @@ if (isset($_POST['submit'])){
                         $imageInsertStatement, "ssiiss", 
                         $filenameNew, 
                         $originalFilename,
-                         $exif['FileDateTime'],
+                         $exif['DateTime'],
                          $exif['FileSize'], 
                          $author, 
                          $description
