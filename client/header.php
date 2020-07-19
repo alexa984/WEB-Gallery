@@ -49,7 +49,7 @@
                     if (isset($_SESSION['userId'])) {     
                         echo "
                         <form action='../server/logout.php' method='post'>
-                            <button type='submit' name='logout-submit' class='form-button'>Logout</button>
+                            <button type='submit' name='logout-submit' class='form-button bolded'>Logout</button>
                         </form>";
                     } 
                     else {
@@ -57,8 +57,8 @@
                         <form action='../server/login.php' method='post'>
                             <input type='text' name='username' value='' placeholder='Username' class='form-input'>
                             <input type='password' name='password' value='' placeholder='Password' class='form-input'>
-                            <button type='submit' name='login-submit' class='form-button'>Login</button>
-                            <a href='register.php' id='register-link'>Register</a>
+                            <button type='submit' name='login-submit' class='form-button bolded'>Login</button>
+                            <a href='register.php' class='form-button bolded'>Register</a>
                         </form>";
                     }
                     ?>
