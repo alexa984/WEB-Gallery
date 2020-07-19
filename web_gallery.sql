@@ -90,15 +90,16 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `username` tinytext NOT NULL,
   `email` tinytext NOT NULL,
-  `password` longtext NOT NULL
+  `password` longtext NOT NULL,
+  `date_registered` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Схема на данните от таблица `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `email`, `password`) VALUES
-(1, 'test_user', 'alex_yovkova@abv.bg', '$2y$10$iRUbwBh/Q.lpoh9k4uRmG.wiXDdyh3bg7WfNdfcZhhG0i.cZwrt.C');
+INSERT INTO `users` (`id`, `username`, `email`, `password`, `date_registered`) VALUES
+(1, 'test_user', 'alex_yovkova@abv.bg', '$2y$10$iRUbwBh/Q.lpoh9k4uRmG.wiXDdyh3bg7WfNdfcZhhG0i.cZwrt.C', '2020-06-10');
 
 --
 -- Indexes for dumped tables
