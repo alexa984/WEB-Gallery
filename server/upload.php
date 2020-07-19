@@ -70,10 +70,10 @@ if (isset($_POST['submit'])){
                         $imageInsertStatement, "ssiiss", 
                         $filenameNew, 
                         $originalFilename,
-                         $exif['DateTime'],
-                         $exif['FileSize'], 
-                         $author, 
-                         $description
+                        strtotime($exif['DateTimeOriginal']),
+                        $exif['FileSize'],
+                        $author,
+                        $description
                     );
                     mysqli_stmt_execute($imageInsertStatement);
                     mysqli_stmt_store_result($imageInsertStatement);
