@@ -171,6 +171,9 @@ ALTER TABLE `image_instances`
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
+ALTER TABLE `album_images`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- Ограничения за дъмпнати таблици
 --
