@@ -17,10 +17,11 @@
         echo '<h1>Welcome to your own Image Gallery!</h1>
             <p>You can now upload new images or view your existing ones. :)</p>';
         echo '<form action="../server/upload.php" method="POST" enctype="multipart/form-data">
-                  <input type="file" name="file">
+                  <input type="file" name="file" required style="margin:20px 0px;"/>
                   <div>
-                    <button type="submit" name="submit" class="form-button">Upload your image</button>
-                  </div>
+                  <button type="submit" name="submit" class="form-button">Upload your image</button>
+                </div>
+
               </form>';
         for ($i = 1; $i <= 10; $i++) {
             $todayYearsAgo = date("Y-m-d", strtotime("-$i years"));
