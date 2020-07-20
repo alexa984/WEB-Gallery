@@ -20,6 +20,7 @@
     <link rel="stylesheet" type="text/css" href="css/footer.css">
     <link rel="stylesheet" type="text/css" href="css/modals.css">
     <link rel="stylesheet" type="text/css" href="css/gallery.css">
+    <link rel="stylesheet" type="text/css" href="css/other.css">
     <script type="text/javascript">
     const loadMessagesCss = () => {
         let newStyleSheet = document.createElement('link');

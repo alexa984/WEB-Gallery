@@ -1,0 +1,17 @@
+.inline-flex {
+  display: inline-flex;
+}
+
+#albums-title {
+  margin: 0;
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+#merge-album-btn,
+#create-album-btn {
+  margin: 0px 5px;
+}
