@@ -16,8 +16,7 @@
         if (!mysqli_stmt_prepare($statement_basic_details, $query_basic_details) or
              !mysqli_stmt_prepare($statement_albums_count, $query_albums_count) or
              !mysqli_stmt_prepare($statement_images_count, $query_images_count)) {
-            //header("Location: index.php?error=sqlerror");
-            printf("Error: %s.\n", mysqli_stmt_error($statement_albums_count));
+            header("Location: index.php?error=sqlerror");
             exit();
         }
         else {

@@ -18,7 +18,8 @@
             <span class="close" id="basic-modal" onclick="closeModal()">&times;</span>
         </div>
         <div class="modal-body">
-            <form id="album-creation-form" method="post" action="create_album.php" enctype="multipart/form-data">
+            <form id="album-creation-form" method="post" action="../server/create_album.php"
+            enctype="multipart/form-data">
                 <label for="start-date">Start date:</label><br>
                 <input class="modal-form" name="start-date" required type="date" min="1970-01-01" max='<?php echo
                  date('Y-m-d');?>'><br>
@@ -85,16 +86,30 @@
             $query = "SELECT * FROM images WHERE id IN (SELECT image_id FROM image_instances WHERE user_id=? AND id IN (SELECT image_instance_id FROM album_images WHERE album_id=?))";
             $statement = mysqli_stmt_init($conn);
 
-            if (!mysqli_stmt_prepare($statement, $query)) {
+            $query_album_info = "SELECT * FROM albums WHERE id=?";
+            $statement_album_info = mysqli_stmt_init($conn);
+
+            if (!mysqli_stmt_prepare($statement, $query) or !mysqli_stmt_prepare($statement_album_info,
+            $query_album_info)) {
                 header("Location: index.php?error=sqlerror");
                 exit();
             }
             else {
+                mysqli_stmt_bind_param($statement_album_info, "i", $_GET['id']);
+                mysqli_stmt_execute($statement_album_info);
+                $album_info = mysqli_stmt_get_result($statement_album_info);
+
                 mysqli_stmt_bind_param($statement, "ii", $_SESSION['userId'], $_GET['id']);
                 mysqli_stmt_execute($statement);
                 $result = mysqli_stmt_get_result($statement);
 
                 echo '<h2>'.$_GET['name'].'</h2>';
+                while ($row = mysqli_fetch_assoc($album_info)) {
+                    if(!empty($row['description'])){
+                        echo '<p><b>Description:</b> '.$row['description'].'</p>';
+                    }
+                    echo '<p><b>Created at:</b> '.date('F d, Y h:mA', strtotime($row['createdAt'])).'</p>';
+                }
                 require "display_gallery.php";
                 display_gallery($result);
             }

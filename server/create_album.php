@@ -1,11 +1,11 @@
 <?php
-require "header.php";
-require "../server/dbhandler.php";
+require "../client/header.php";
+require "dbhandler.php";
 if (isset($_SESSION['userId'])){
     $query_check_album_name = "SELECT * FROM albums WHERE name=? AND userId=?";
     $statement_check_album_name = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($statement_check_album_name, $query_check_album_name)) {
-        header("Location: index.php?error=sqlerror");
+        header("Location: ../client/index.php?error=sqlerror");
         exit();
     }
     mysqli_stmt_bind_param($statement_check_album_name, "si", $_POST['album-name'], $_SESSION['userId']);
@@ -13,7 +13,7 @@ if (isset($_SESSION['userId'])){
     $result_albums = mysqli_stmt_get_result($statement_check_album_name);
     $number_of_albums = mysqli_num_rows($result_albums);
     if ($number_of_albums > 0) {
-        header("Location: albums.php?error=albumnameerror");
+        header("Location: ../client/albums.php?error=albumnameerror");
         exit();
     }
 
@@ -22,7 +22,7 @@ if (isset($_SESSION['userId'])){
     WHERE user_id=? AND (DATE(timestamp) BETWEEN ? AND ?) ORDER BY timestamp ASC";
     $statement_images_id = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($statement_images_id, $query_images_id)) {
-        header("Location: index.php?error=sqlerror");
+        header("Location: ../client/index.php?error=sqlerror");
         exit();
     }
     else {
@@ -36,7 +36,7 @@ if (isset($_SESSION['userId'])){
             $query_create_album = "INSERT INTO albums (name, description, createdAt, userId) VALUES (?, ?, NOW(), ?)";
             $statement_create_album = mysqli_stmt_init($conn);
             if (!mysqli_stmt_prepare($statement_create_album, $query_create_album)) {
-                header("Location: index.php?error=sqlerror");
+                header("Location: ../client/index.php?error=sqlerror");
                 exit();
             }
             mysqli_stmt_bind_param($statement_create_album, "ssi", $_POST['album-name'], $_POST['description'],
@@ -46,7 +46,7 @@ if (isset($_SESSION['userId'])){
             $query_add_image = "INSERT INTO album_images (image_instance_id, album_id) VALUES (?, ?)";
             $statement_add_image = mysqli_stmt_init($conn);
             if (!mysqli_stmt_prepare($statement_add_image, $query_add_image)) {
-                header("Location: index.php?error=sqlerror");
+                header("Location: ../client/index.php?error=sqlerror");
                 exit();
             }
             while ($row = mysqli_fetch_array($result)) {
@@ -54,10 +54,10 @@ if (isset($_SESSION['userId'])){
                 mysqli_stmt_execute($statement_add_image);
             }
             mysqli_commit($conn);
-            header("Location: albums.php");
+            header("Location: ../client/albums.php");
         }
         else{
-            header("Location: albums.php?error=dateerror");
+            header("Location: ../client/albums.php?error=dateerror");
         }
     }
 }
