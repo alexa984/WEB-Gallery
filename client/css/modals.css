@@ -1,5 +1,4 @@
-#modal,
-#merge-modal {
+.modal {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -7,17 +6,18 @@
   transition: 200ms ease-in-out;
   z-index: 10;
   background-color: white;
-  width: 500px;
-  max-width: 80%;
+  width: 300px;
+  max-width: 60%;
+  height: 400px;
 }
 
-#modal.active,
+#create-modal.active,
 #merge-modal.active {
   transform: translate(-50%, -50%) scale(1);
 }
 
 #merge-modal {
-  border: 3px solid red;
+  height: 500px;
 }
 
 .modal-header {
@@ -49,6 +49,11 @@
   padding: 10px 15px;
 }
 
+#basic-modal {
+  top: -3px;
+  right: 17px;
+}
+
 #overlay {
   position: fixed;
   opacity: 0;
@@ -66,6 +71,22 @@
   pointer-events: all;
 }
 
-#merge-modal {
-  color: red;
+#album-creation-form {
+    height: 450px;
+}
+
+#album-creation-form .modal-form {
+    width: 270px;
+    max-width: 90%;
+    height: 25px;
+    margin-bottom: 7px;
+    border: solid 1px #999;
+}
+
+#album-creation-form #albums {
+  height: 70px;
+}
+
+#album-creation-form #description {
+  height: 60px;
 }

@@ -6,13 +6,13 @@ overlay.addEventListener("click", () => {
 });
 
 function openModal() {
-  document.getElementById("modal").style.transform =
+  document.getElementById("create-modal").style.transform =
     "translate(-50%, -50%) scale(1, 1)";
   overlay.classList.add("active");
 }
 
 function closeModal() {
-  document.getElementById("modal").style.transform =
+  document.getElementById("create-modal").style.transform =
     "translate(-50%, -50%) scale(0, 0)";
   overlay.classList.remove("active");
 }

@@ -1,5 +1,6 @@
 .inline-flex {
   display: inline-flex;
+  padding-bottom: 50px;
 }
 
 #albums-title {
