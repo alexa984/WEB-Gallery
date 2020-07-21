@@ -1,4 +1,5 @@
 <?php
+    date_default_timezone_set('Europe/Sofia');
     session_start();
     if (!isset($_SESSION['start_time']))
     {

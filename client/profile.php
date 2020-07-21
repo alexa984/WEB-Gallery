@@ -28,7 +28,6 @@
             echo '<p> <em>Email: </em>'.$result_basic_details['email'].'</p>';
             echo '<p> <em>Member since: </em>'.date('F d, Y', strtotime($result_basic_details['date_registered'])).'</p>';
 
-            date_default_timezone_set('Europe/Sofia');
             echo '<p> <em>Last login: </em>'.date('F d, Y h:mA', $_SESSION['start_time']).'</p>';
 
             mysqli_stmt_bind_param($statement_images_count, "i", $_SESSION['userId']);
