@@ -23,7 +23,7 @@
                 </div>
 
               </form>';
-        for ($i = 1; $i <= 10; $i++) {
+        for ($i = 1; $i <= 50; $i++) {
             $todayYearsAgo = date("Y-m-d", strtotime("-$i years"));
             $query = "SELECT path FROM images WHERE
                         id IN (SELECT image_id FROM image_instances WHERE user_id=?

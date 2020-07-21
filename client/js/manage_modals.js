@@ -1,8 +1,8 @@
 const overlay = document.getElementById("overlay");
 overlay.addEventListener("click", () => {
   closeModal();
-  closeGalleryModal();
   closeMergeModal();
+  closeGalleryModal();
 });
 
 function openModal() {

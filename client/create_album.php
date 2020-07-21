@@ -2,13 +2,13 @@
 require "header.php";
 require "../server/dbhandler.php";
 if (isset($_SESSION['userId'])){
-    $query_check_album_name = "SELECT * FROM albums WHERE name=?";
+    $query_check_album_name = "SELECT * FROM albums WHERE name=? AND userId=?";
     $statement_check_album_name = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($statement_check_album_name, $query_check_album_name)) {
         header("Location: index.php?error=sqlerror");
         exit();
     }
-    mysqli_stmt_bind_param($statement_check_album_name, "s", $_POST['album-name']);
+    mysqli_stmt_bind_param($statement_check_album_name, "si", $_POST['album-name'], $_SESSION['userId']);
     mysqli_stmt_execute($statement_check_album_name);
     $result_albums = mysqli_stmt_get_result($statement_check_album_name);
     $number_of_albums = mysqli_num_rows($result_albums);

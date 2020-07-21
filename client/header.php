@@ -12,7 +12,6 @@
 
 <head>
     <meta charset='utf-8'>
-    <!-- Can we make each page has its own title -->
     <title>Image gallery</title>
     <link rel="stylesheet" type="text/css" href="css/nav.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
