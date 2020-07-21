@@ -2,6 +2,21 @@
 require "header.php";
 require "../server/dbhandler.php";
 if (isset($_SESSION['userId'])){
+    $query_check_album_name = "SELECT * FROM albums WHERE name=?";
+    $statement_check_album_name = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($statement_check_album_name, $query_check_album_name)) {
+        header("Location: index.php?error=sqlerror");
+        exit();
+    }
+    mysqli_stmt_bind_param($statement_check_album_name, "s", $_POST['album-name']);
+    mysqli_stmt_execute($statement_check_album_name);
+    $result_albums = mysqli_stmt_get_result($statement_check_album_name);
+    $number_of_albums = mysqli_num_rows($result_albums);
+    if ($number_of_albums > 0) {
+        header("Location: albums.php?error=albumnameerror");
+        exit();
+    }
+
     $query_images_id = "SELECT image_instances.id FROM images INNER JOIN image_instances ON images.id=image_instances
     .image_id
     WHERE user_id=? AND (DATE(timestamp) BETWEEN ? AND ?) ORDER BY timestamp ASC";
@@ -39,8 +54,11 @@ if (isset($_SESSION['userId'])){
                 mysqli_stmt_execute($statement_add_image);
             }
             mysqli_commit($conn);
+            header("Location: albums.php");
         }
-        header("Location: albums.php");
+        else{
+            header("Location: albums.php?error=dateerror");
+        }
     }
 }
 
