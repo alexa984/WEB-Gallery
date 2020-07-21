@@ -37,6 +37,10 @@ CREATE TABLE `albums` (
   `userId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+INSERT INTO `albums` (`id`, `name`, `description`, `createdAt`, `userId`) VALUES
+(1, 'Test Album', 'This is a test album', '2020-07-21 20:31:34', 1),
+(2, 'Second Test', 'This is another test album', '2020-07-21 20:32:39', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -48,6 +52,13 @@ CREATE TABLE `album_images` (
   `image_instance_id` int(11) NOT NULL,
   `album_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO `album_images` (`id`, `image_instance_id`, `album_id`) VALUES
+(1, 9, 1),
+(2, 8, 1),
+(3, 3, 1),
+(4, 5, 2),
+(5, 4, 2);
 
 -- --------------------------------------------------------
 
@@ -68,6 +79,15 @@ CREATE TABLE `images` (
   `geoposition` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+INSERT INTO `images` (`path`, `timestamp`, `device`, `filesize`, `number_instances`, `id`, `original_filename`, `author`, `description`, `geoposition`) VALUES
+('Chrysanthemum_5f174d9829225.jpg', '2020-07-14 11:59:26', NULL, 879394, 1, 15, 'Chrysanthemum.jpg', '', '', NULL),
+('Hydrangeas_5f174da2e5207.jpg', '2020-06-24 14:41:53', NULL, 595284, 1, 16, 'Hydrangeas.jpg', '', '', NULL),
+('Desert_5f174dc478022.jpg', '2020-06-14 11:59:26', NULL, 845941, 1, 17, 'Desert.jpg', '', '', NULL),
+('Penguins_5f174dcd791c4.jpg', '2019-07-22 03:07:31', NULL, 777835, 1, 18, 'Penguins.jpg', '', '', NULL),
+('Koala_5f174dd61ec81.jpg', '2019-07-22 09:32:43', NULL, 780831, 1, 19, 'Koala.jpg', '', '', NULL),
+('Lighthouse_5f174ddfea854.jpg', '2020-07-11 09:32:51', NULL, 561276, 1, 20, 'Lighthouse.jpg', '', '', NULL),
+('Tulips_5f174de637144.jpg', '2020-07-07 09:33:11', NULL, 620888, 1, 21, 'Tulips.jpg', '', '', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -79,6 +99,15 @@ CREATE TABLE `image_instances` (
   `user_id` int(11) NOT NULL,
   `image_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO `image_instances` (`id`, `user_id`, `image_id`) VALUES
+(3, 1, 15),
+(4, 1, 16),
+(5, 1, 17),
+(6, 1, 18),
+(7, 1, 19),
+(8, 1, 20),
+(9, 1, 21);
 
 -- --------------------------------------------------------
 
