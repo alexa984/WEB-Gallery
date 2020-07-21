@@ -1,11 +1,9 @@
 <?php
-    $server_name = "localhost";
-    $db_username = "root";
-    $db_password = "";
-    $db_name = "web_gallery";
+include ("../config.php");
+$configs = new Config();
 
     # create connection
-    $conn = mysqli_connect($server_name, $db_username, $db_password, $db_name);
+    $conn = mysqli_connect($configs->SERVER_NAME, $configs->DB_USERNAME, $configs->DB_PASSWORD, $configs->DB_NAME);
 
     if(!$conn){
         die("Connection failed: ".mysqli_connect_error());
