@@ -39,15 +39,16 @@
             <span class="close" id="basic-modal" onclick="closeMergeModal()">&times;</span>
         </div>
         <div class="modal-body">
-            <form id="album-creation-form" method="post" action="merge_albums.php" enctype="multipart/form-data">
+            <form id="album-creation-form" method="post" action="../server/merge_albums.php"
+            enctype="multipart/form-data">
                 <label for="start-date">Start date merge criteria:</label><br>
                 <input class="modal-form" name="start-date" type="date" min="1970-01-01" max='<?php echo date
                 ('Y-m-d');?>'><br>
                 <label for="end-date">End date merge criteria:</label><br>
                 <input class="modal-form" name="end-date" type="date" min="1970-01-01" max='<?php echo date
                 ('Y-m-d');?>'><br>
-                <label for="cars">Choose albums to merge:</label><br>
-                <select class="modal-form" name="albums" id="albums" multiple>
+                <label for="albums">Choose albums to merge:</label><br>
+                <select class="modal-form" name="albums[]" id="albums" multiple>
                     <?php
                         
                         $query = "SELECT * FROM albums WHERE userId=?";
@@ -99,6 +100,12 @@
             }
 
         } else {
+            if (isset($_GET['error']) && $_GET['error']=="dateerror" ) {
+                echo '<p id="album-date-error"> You have no images from the date range you have selected!</p>';
+            }
+            if (isset($_GET['error']) && $_GET['error']=="albumnameerror" ) {
+                 echo '<p id="album-date-error"> You already have an album with the same name!</p>';
+            }
             // List all albums with their names
             $query = "SELECT * FROM albums WHERE userId=?";
             $statement = mysqli_stmt_init($conn);
@@ -111,9 +118,10 @@
                 mysqli_stmt_bind_param($statement, "i", $_SESSION['userId']);
                 mysqli_stmt_execute($statement);
                 $result = mysqli_stmt_get_result($statement);
-                echo '<div style="display: grid; grid-template-columns: 20% 20% 20% 20%; grid-gap: 3%;">';
+                echo '<div style="display: grid; grid-template-columns: 20% 20% 20% 20%; grid-gap: 7%;">';
                 while($row = mysqli_fetch_assoc($result)){
-                    echo '<flex style="text-align: center;"><a href="?id='.$row['id'].'&name='.$row['name'].'"><img src="./images/folder.png"/>'.$row['name'].'</a></flex> ';
+                    echo '<flex style="text-align: center;"><a href="?id='.$row['id'].'&name='.$row['name'].'"><img
+                    class="folder" src="./images/folder.png"/>'.$row['name'].'</a></flex> ';
                 }
                 echo '</div>';
             }

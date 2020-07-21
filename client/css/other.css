@@ -16,3 +16,16 @@
 #create-album-btn {
   margin: 0px 5px;
 }
+
+#album-date-error {
+  padding-top: 0px;
+  padding-bottom: 10px;
+  color: black;
+}
+
+.folder {
+  height: 150px;
+  width: 150px;
+  max-height: 100%;
+  max-weight: 100%;
+}
