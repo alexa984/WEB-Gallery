@@ -31,7 +31,6 @@
     window.addEventListener('load', loadMessagesCss);
     </script>
     <script defer src="js/manage_modals.js"></script>
-    <script defer src="js/validate_album_creation.js"></script>
 </head>
 
 <body>

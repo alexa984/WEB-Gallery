@@ -2,7 +2,7 @@
     require "header.php";
     require "../server/dbhandler.php";
 ?>
-
+<script defer src="js/validate_album_creation.js"></script>
 <main class="container">
     <div class="flex">
         <h1 id="albums-title" class="inline-flex">My Albums</h1>
@@ -23,7 +23,8 @@
                 <input class="modal-form" name="start-date" required type="date" min="1970-01-01" max='<?php echo
                  date('Y-m-d');?>'><br>
                 <label for="end-date">End date:</label><br>
-                <input class="modal-form" name="end-date" required type="date" min="1970-01-01" max='<?php echo date('Y-m-d');?>'><br>
+                <input class="modal-form" name="end-date" required type="date" min="1970-01-01"
+                    max='<?php echo date('Y-m-d');?>'><br>
                 <label for="album-name">Album name:</label><br>
                 <input class="modal-form" name="album-name" required type="text"><br>
                 <label for="description">Description:</label><br>
