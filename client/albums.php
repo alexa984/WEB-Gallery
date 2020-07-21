@@ -40,7 +40,7 @@
         </div>
         <div class="modal-body">
             <form id="album-creation-form" method="post" action="../server/merge_albums.php"
-            enctype="multipart/form-data">
+                enctype="multipart/form-data">
                 <label for="start-date">Start date merge criteria:</label><br>
                 <input class="modal-form" name="start-date" type="date" min="1970-01-01" max='<?php echo date
                 ('Y-m-d');?>'><br>
@@ -120,7 +120,7 @@
                 $result = mysqli_stmt_get_result($statement);
                 echo '<div style="display: grid; grid-template-columns: 20% 20% 20% 20%; grid-gap: 7%;">';
                 while($row = mysqli_fetch_assoc($result)){
-                    echo '<flex style="text-align: center;"><a href="?id='.$row['id'].'&name='.$row['name'].'"><img
+                    echo '<flex style="text-align: center;"><a class="album-name" href="?id='.$row['id'].'&name='.$row['name'].'"><img
                     class="folder" src="./images/folder.png"/>'.$row['name'].'</a></flex> ';
                 }
                 echo '</div>';
