@@ -43,7 +43,11 @@
                 $modal_gallery = '<div id="gallery-modal">
                     <span class="close" onclick="closeGalleryModal()">&times;</span>';
                 if (mysqli_num_rows($result) > 0) {
-                    echo "<h2>You have memories from this day $i years ago. Check them out:<h2>";
+                    $years = "year";
+                    if ($i > 1) {
+                        $years .= "s";
+                    }
+                    echo "<h2>You have memories from this day $i $years ago. Check them out:<h2>";
                     while($row = mysqli_fetch_assoc($result)){
                         echo '<img class="small-image" onclick="openGalleryModal(); currentSlide('.($picture_index + 1).')"src="../server/images/'.$row['path'].'">';
                         $picture_data = '';
