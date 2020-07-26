@@ -110,13 +110,16 @@
                     }
                     echo '<p><b>Created at:</b> '.date('F d, Y h:mA', strtotime($row['createdAt'])).'</p>';
                 }
+                $album_id = $_GET['id'];
+                $album_name = $_GET['name'];
                 echo '<div id="upload-modal">
                         <div class="modal-header">
                             <div class="title">Upload new image to album</div>
                             <span class="close" id="basic-modal" onclick="closeUploadModal()">&times;</span>
                         </div>
                         <div class="modal-body">
-                            <form action="../server/upload.php" method="POST" enctype="multipart/form-data">
+                            <form action="../server/upload_to_album.php?id='.$album_id.'&name='.$album_name.'"
+                            method="POST" enctype="multipart/form-data">
                                 <input type="file" name="file" required style="margin:20px 0px;"/>
                                 <div>
                                     <button type="submit" name="submit" class="form-button">Upload your image</button>
