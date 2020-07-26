@@ -95,7 +95,7 @@ if (isset($_POST['submit'])){
                 } else {
                     // Create an Image
                     mysqli_stmt_bind_param(
-                        $imageInsertStatement, "ssiissii", 
+                        $imageInsertStatement, "ssiissss", 
                         $filenameNew, 
                         $originalFilename,
                         strtotime($exif['DateTimeOriginal']),
