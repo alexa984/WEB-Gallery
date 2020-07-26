@@ -5,9 +5,49 @@
         $modal_gallery = '<div id="gallery-modal">
              <span class="close" onclick="closeGalleryModal()">&times;</span>';
 
+        echo '<div id="delete-modal">
+                            <div class="modal-header">
+                                <div class="title">Delete image</div>
+                                <span class="close" id="basic-modal" onclick="closeDeleteModal()">&times;</span>
+                            </div>
+                            <div class="modal-body">
+                                <form method="POST" enctype="multipart/form-data">
+                                    <p>Are you sure you want to delete this image?</p>
+                                    <div>
+                                        <button type="submit" name="submit" onclick="closeDeleteModal()"
+                                        class="form-button">Yes</button>
+                                        <button name="no" onclick="closeDeleteModal()" class="form-button">No</button>
+                                    </div>
+                                </form>
+                            </div>
+                       </div>';
+
+        echo '<div id="modify-modal">
+                            <div class="modal-header">
+                                <div class="title">Modify image details</div>
+                                <span class="close" id="basic-modal" onclick="closeModifyModal()">&times;</span>
+                            </div>
+                            <div class="modal-body">
+                                <form id="modify-details-form" method="POST" enctype="multipart/form-data">
+                                    <label for="date-taken">Date taken:</label><br>
+                                    <input class="modal-form" name="date-taken" type="date" min="1970-01-0" max='.date
+                                    ('Y-m-d').'><br>
+                                    <label for="author">Author:</label><br>
+                                    <input class="modal-form" name="author" type="text"><br>
+                                    <label for="description">Description:</label><br>
+                                    <textarea class="modal-form" id="description" name="description" type="text"></textarea><br>
+                                    <input class="form-button" type="submit" onclick="closeModifyModal()"
+                                    value="Modify">
+                                    <input class="form-button" type="submit" onclick="closeModifyModal()"
+                                    value="Cancel">
+                                </form>
+                            </div>
+                       </div>';
+
         while($row = mysqli_fetch_assoc($result)){
-            echo '<img class="small-image" onclick="openGalleryModal(); currentSlide('.($picture_index + 1).')"
-            src="../server/images/'.$row['path'].'">';
+            echo '<img class="small-image" onclick="openGalleryModal(); currentSlide('.($picture_index + 1).')" src="../server/images/'.$row['path'].'">
+                <img class="delete" onclick="openDeleteModal()" src="./images/delete.png">
+                <img class="modify" onclick="openModifyModal()" src="./images/modify.png">';
             $picture_data = '';
             if(!empty($row['timestamp'])){
                 $picture_data .= 'Date: '.date('F j, Y', strtotime($row['timestamp']));

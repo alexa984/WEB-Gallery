@@ -110,6 +110,21 @@
                     }
                     echo '<p><b>Created at:</b> '.date('F d, Y h:mA', strtotime($row['createdAt'])).'</p>';
                 }
+                echo '<div id="upload-modal">
+                        <div class="modal-header">
+                            <div class="title">Upload new image to album</div>
+                            <span class="close" id="basic-modal" onclick="closeUploadModal()">&times;</span>
+                        </div>
+                        <div class="modal-body">
+                            <form action="../server/upload.php" method="POST" enctype="multipart/form-data">
+                                <input type="file" name="file" required style="margin:20px 0px;"/>
+                                <div>
+                                    <button type="submit" name="submit" class="form-button">Upload your image</button>
+                                </div>
+                            </form>
+                        </div>
+                     </div>';
+                echo '<img class="add" onclick="openUploadModal()" src="./images/add.png"><br>';
                 require "display_gallery.php";
                 display_gallery($result);
             }
