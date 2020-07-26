@@ -1,5 +1,25 @@
 <?php
 session_start();
+
+function gps($coordinate, $hemisphere) {
+    if (is_string($coordinate)) {
+      $coordinate = array_map("trim", explode(",", $coordinate));
+    }
+    for ($i = 0; $i < 3; $i++) {
+      $part = explode('/', $coordinate[$i]);
+      if (count($part) == 1) {
+        $coordinate[$i] = $part[0];
+      } else if (count($part) == 2) {
+        $coordinate[$i] = floatval($part[0])/floatval($part[1]);
+      } else {
+        $coordinate[$i] = 0;
+      }
+    }
+    list($degrees, $minutes, $seconds) = $coordinate;
+    $sign = ($hemisphere == 'W' || $hemisphere == 'S') ? -1 : 1;
+    return $sign * ($degrees + $minutes/60.0 + $seconds/3600.0);
+  }
+
 if (isset($_POST['submit'])){
     $file = $_FILES['file'];
     $originalFilename = $file['name'];
@@ -56,9 +76,17 @@ if (isset($_POST['submit'])){
                 } else {
                     $description = '';
                 }
+                if (isset($exif["GPSLongitude"]) && isset($exif["GPSLatitude"])){
+                    $longitude = gps($exif["GPSLongitude"], $exif['GPSLongitudeRef']);
+                    $latitude = gps($exif["GPSLatitude"], $exif['GPSLatitudeRef']);
+                    // TODO: Add link to google maps like so: https://maps.google.com/?q=<lat>,<lng>
+                } else {
+                    $longitude = null;
+                    $latitude = null;
+                }
 
-                $sqlInsertImage = "INSERT INTO images (path, original_filename, number_instances, timestamp, filesize, author, description) 
-                                   VALUES (?, ?, '1', FROM_UNIXTIME(?), ?, ?, ?)";
+                $sqlInsertImage = "INSERT INTO images (path, original_filename, number_instances, timestamp, filesize, author, description, gps_longitude, gps_latitude) 
+                                   VALUES (?, ?, '1', FROM_UNIXTIME(?), ?, ?, ?, ?, ?)";
 
                 $imageInsertStatement = mysqli_stmt_init($conn);
                 if (!mysqli_stmt_prepare($imageInsertStatement, $sqlInsertImage)) {
@@ -67,13 +95,15 @@ if (isset($_POST['submit'])){
                 } else {
                     // Create an Image
                     mysqli_stmt_bind_param(
-                        $imageInsertStatement, "ssiiss", 
+                        $imageInsertStatement, "ssiissii", 
                         $filenameNew, 
                         $originalFilename,
                         strtotime($exif['DateTimeOriginal']),
                         $exif['FileSize'],
                         $author,
-                        $description
+                        $description,
+                        $longitude,
+                        $latitude
                     );
                     mysqli_stmt_execute($imageInsertStatement);
                     mysqli_stmt_store_result($imageInsertStatement);

@@ -68,7 +68,7 @@ INSERT INTO `album_images` (`id`, `image_instance_id`, `album_id`) VALUES
 
 CREATE TABLE `images` (
   `path` varchar(2048) NOT NULL,
-  `timestamp` timestamp NULL DEFAULT NULL,
+  `timestamp` timestamp NULL DEFAULT current_timestamp(),
   `device` varchar(255) DEFAULT NULL,
   `filesize` float DEFAULT NULL,
   `number_instances` int(11) NOT NULL DEFAULT 0,
@@ -76,7 +76,8 @@ CREATE TABLE `images` (
   `original_filename` varchar(255) NOT NULL,
   `author` varchar(255) DEFAULT NULL,
   `description` text DEFAULT NULL,
-  `geoposition` varchar(255) DEFAULT NULL
+  `gps_longitude` float(7,4) DEFAULT NULL,
+  `gps_latitude` float(7,4) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO `images` (`path`, `timestamp`, `device`, `filesize`, `number_instances`, `id`, `original_filename`, `author`, `description`, `geoposition`) VALUES
