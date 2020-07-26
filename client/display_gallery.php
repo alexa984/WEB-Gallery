@@ -59,7 +59,7 @@
                 $picture_data .= ' Description: '.$row['description'].'<br />';
             }
             if($row['gps_longitude'] && $row['gps_latitude']){
-                $picture_data .= 'Place taken: '.'<a href="https://maps.google.com/?q='.$row['gps_latitude'].','.$row['gps_longitude'].'">'.$row['gps_latitude'].','.$row['gps_longitude'].'</a><br />';
+                $picture_data .= 'Place taken: '.'<a href="https://maps.google.com/?q='.$row['gps_latitude'].','.$row['gps_longitude'].'">'.$row['address'].'</a><br />';
             }
             $modal_gallery .= '
                 <div class="slides">

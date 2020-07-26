@@ -60,8 +60,8 @@
                         if(!empty($row['description'])){
                             $picture_data .= ' Description: '.$row['description'].'<br />';
                         }
-                        if($row['gps_longitude'] && $row['gps_latitude']){
-                            $picture_data .= 'Place taken: '.'<a href="https://maps.google.com/?q='.$row['gps_latitude'].','.$row['gps_longitude'].'">'.$row['gps_latitude'].','.$row['gps_longitude'].'</a><br />';
+                        if(!empty($row['gps_longitude']) && !empty($row['gps_latitude'])){
+                            $picture_data .= 'Place taken: '.'<a href="https://maps.google.com/?q='.$row['gps_latitude'].','.$row['gps_longitude'].'">'.$row['address'].'</a><br />';
                         }
                         $modal_gallery .= '
                         <div class="slides">

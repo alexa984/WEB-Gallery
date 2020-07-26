@@ -79,14 +79,21 @@ if (isset($_POST['submit'])){
                 if (isset($exif["GPSLongitude"]) && isset($exif["GPSLatitude"])){
                     $longitude = gps($exif["GPSLongitude"], $exif['GPSLongitudeRef']);
                     $latitude = gps($exif["GPSLatitude"], $exif['GPSLatitudeRef']);
-                    // TODO: Add link to google maps like so: https://maps.google.com/?q=<lat>,<lng>
+                    $geocode = file_get_contents('https://api.opencagedata.com/geocode/v1/json?q='.$latitude.','.$longitude.'&key=4818a809d1be4df793d5eefb22edfbc6&language=en&pretty=1');
+                    $output = json_decode($geocode);
+                    if ($output->status->code == 200) {
+                        $address = $output->results[0]->formatted;
+                    } else {
+                        $address = '';
+                    }
                 } else {
                     $longitude = null;
                     $latitude = null;
+                    $address = '';
                 }
 
-                $sqlInsertImage = "INSERT INTO images (path, original_filename, number_instances, timestamp, filesize, author, description, gps_longitude, gps_latitude) 
-                                   VALUES (?, ?, '1', FROM_UNIXTIME(?), ?, ?, ?, ?, ?)";
+                $sqlInsertImage = "INSERT INTO images (path, original_filename, number_instances, timestamp, filesize, author, description, gps_longitude, gps_latitude, address) 
+                                   VALUES (?, ?, '1', FROM_UNIXTIME(?), ?, ?, ?, ?, ?, ?)";
 
                 $imageInsertStatement = mysqli_stmt_init($conn);
                 if (!mysqli_stmt_prepare($imageInsertStatement, $sqlInsertImage)) {
@@ -95,7 +102,7 @@ if (isset($_POST['submit'])){
                 } else {
                     // Create an Image
                     mysqli_stmt_bind_param(
-                        $imageInsertStatement, "ssiissss", 
+                        $imageInsertStatement, "ssiisssss", 
                         $filenameNew, 
                         $originalFilename,
                         strtotime($exif['DateTimeOriginal']),
@@ -103,7 +110,8 @@ if (isset($_POST['submit'])){
                         $author,
                         $description,
                         $longitude,
-                        $latitude
+                        $latitude,
+                        $address
                     );
                     mysqli_stmt_execute($imageInsertStatement);
                     mysqli_stmt_store_result($imageInsertStatement);

@@ -77,7 +77,8 @@ CREATE TABLE `images` (
   `author` varchar(255) DEFAULT NULL,
   `description` text DEFAULT NULL,
   `gps_longitude` varchar(12) DEFAULT NULL,
-  `gps_latitude` varchar(12) DEFAULT NULL
+  `gps_latitude` varchar(12) DEFAULT NULL,
+  `address` varchar(512) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO `images` (`path`, `timestamp`, `device`, `filesize`, `number_instances`, `id`, `original_filename`, `author`, `description`, `geoposition`) VALUES
