@@ -147,17 +147,18 @@ if (isset($_POST['submit'])){
                     $currNumInstances = $imageRow['number_instances'];
 
                     increase_image_number_instances($conn, $imageRow['id'], $currNumInstances);
-                    $last_image_instance_id = mysqli_insert_id($conn);
-                    $query_add_image = "INSERT INTO album_images (image_instance_id, album_id) VALUES (?, ?)";
-                    $statement_add_image = mysqli_stmt_init($conn);
-                    if (!mysqli_stmt_prepare($statement_add_image, $query_add_image)) {
-                        header("Location: ../client/index.php?error=sqlerror");
-                        exit();
-                    }
-                    mysqli_stmt_bind_param($statement_add_image, "ii", $last_image_instance_id, $_GET['id']);
-                    mysqli_stmt_execute($statement_add_image);
+
                 }
             }
+            $last_image_instance_id = mysqli_insert_id($conn);
+            $query_add_image = "INSERT INTO album_images (image_instance_id, album_id) VALUES (?, ?)";
+            $statement_add_image = mysqli_stmt_init($conn);
+            if (!mysqli_stmt_prepare($statement_add_image, $query_add_image)) {
+                header("Location: ../client/index.php?error=sqlerror");
+                exit();
+            }
+            mysqli_stmt_bind_param($statement_add_image, "ii", $last_image_instance_id, $_GET['id']);
+            mysqli_stmt_execute($statement_add_image);
             $album_id = $_GET['id'];
             $album_name = $_GET['name'];
             header('Location: ../client/albums.php?id='.$album_id.'&name='.$album_name);
