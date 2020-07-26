@@ -37,3 +37,10 @@
   font-weight: bold;
   color: black;
 }
+
+.white,
+.white:active,
+.white:visited,
+.white:focus {
+  color: white !important;
+}
