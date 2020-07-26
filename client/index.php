@@ -52,13 +52,16 @@
                         echo '<img class="small-image" onclick="openGalleryModal(); currentSlide('.($picture_index + 1).')"src="../server/images/'.$row['path'].'">';
                         $picture_data = '';
                         if(!empty($row['timestamp'])){
-                            $picture_data .= 'Date: '.date('F j, Y', strtotime($row['timestamp']));
+                            $picture_data .= 'Date: '.date('F j, Y', strtotime($row['timestamp'])).'<br />';
                         }
                         if(!empty($row['author'])){
-                            $picture_data .= ' Author: '.$row['author'];
+                            $picture_data .= ' Author: '.$row['author'].'<br />';
                         }
                         if(!empty($row['description'])){
-                            $picture_data .= ' Description: '.$row['description'];
+                            $picture_data .= ' Description: '.$row['description'].'<br />';
+                        }
+                        if($row['gps_longitude'] && $row['gps_latitude']){
+                            $picture_data .= 'Place taken: '.'<a href="https://maps.google.com/?q='.$row['gps_latitude'].','.$row['gps_longitude'].'">'.$row['gps_latitude'].','.$row['gps_longitude'].'</a><br />';
                         }
                         $modal_gallery .= '
                         <div class="slides">
