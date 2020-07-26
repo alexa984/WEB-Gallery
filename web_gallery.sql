@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 10 юни 2020 в 01:15
+-- Generation Time: 26 юли 2020 в 22:12
 -- Версия на сървъра: 10.4.11-MariaDB
 -- PHP Version: 7.2.31
 
@@ -21,8 +21,6 @@ SET time_zone = "+00:00";
 -- Database: `web_gallery`
 --
 
-CREATE DATABASE IF NOT EXISTS web_gallery DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE web_gallery;
 -- --------------------------------------------------------
 
 --
@@ -36,6 +34,10 @@ CREATE TABLE `albums` (
   `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
   `userId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Схема на данните от таблица `albums`
+--
 
 INSERT INTO `albums` (`id`, `name`, `description`, `createdAt`, `userId`) VALUES
 (1, 'Test Album', 'This is a test album', '2020-07-21 20:31:34', 1),
@@ -52,6 +54,10 @@ CREATE TABLE `album_images` (
   `image_instance_id` int(11) NOT NULL,
   `album_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Схема на данните от таблица `album_images`
+--
 
 INSERT INTO `album_images` (`id`, `image_instance_id`, `album_id`) VALUES
 (1, 9, 1),
@@ -81,14 +87,19 @@ CREATE TABLE `images` (
   `address` varchar(512) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO `images` (`path`, `timestamp`, `device`, `filesize`, `number_instances`, `id`, `original_filename`, `author`, `description`, `geoposition`) VALUES
-('Chrysanthemum_5f174d9829225.jpg', '2020-07-14 11:59:26', NULL, 879394, 1, 15, 'Chrysanthemum.jpg', '', '', NULL),
-('Hydrangeas_5f174da2e5207.jpg', '2020-06-24 14:41:53', NULL, 595284, 1, 16, 'Hydrangeas.jpg', '', '', NULL),
-('Desert_5f174dc478022.jpg', '2020-06-14 11:59:26', NULL, 845941, 1, 17, 'Desert.jpg', '', '', NULL),
-('Penguins_5f174dcd791c4.jpg', '2019-07-22 03:07:31', NULL, 777835, 1, 18, 'Penguins.jpg', '', '', NULL),
-('Koala_5f174dd61ec81.jpg', '2019-07-22 09:32:43', NULL, 780831, 1, 19, 'Koala.jpg', '', '', NULL),
-('Lighthouse_5f174ddfea854.jpg', '2020-07-11 09:32:51', NULL, 561276, 1, 20, 'Lighthouse.jpg', '', '', NULL),
-('Tulips_5f174de637144.jpg', '2020-07-07 09:33:11', NULL, 620888, 1, 21, 'Tulips.jpg', '', '', NULL);
+--
+-- Схема на данните от таблица `images`
+--
+
+INSERT INTO `images` (`path`, `timestamp`, `device`, `filesize`, `number_instances`, `id`, `original_filename`, `author`, `description`, `gps_longitude`, `gps_latitude`, `address`) VALUES
+('Chrysanthemum_5f174d9829225.jpg', '2020-07-14 11:59:26', NULL, 879394, 1, 15, 'Chrysanthemum.jpg', '', '', NULL, NULL, NULL),
+('Hydrangeas_5f174da2e5207.jpg', '2020-06-24 14:41:53', NULL, 595284, 1, 16, 'Hydrangeas.jpg', '', '', NULL, NULL, NULL),
+('Desert_5f174dc478022.jpg', '2020-06-14 11:59:26', NULL, 845941, 1, 17, 'Desert.jpg', '', '', NULL, NULL, NULL),
+('Penguins_5f174dcd791c4.jpg', '2019-07-22 03:07:31', NULL, 777835, 1, 18, 'Penguins.jpg', '', '', NULL, NULL, NULL),
+('Koala_5f174dd61ec81.jpg', '2019-07-22 09:32:43', NULL, 780831, 1, 19, 'Koala.jpg', '', '', NULL, NULL, NULL),
+('Lighthouse_5f174ddfea854.jpg', '2020-07-11 09:32:51', NULL, 561276, 1, 20, 'Lighthouse.jpg', '', '', NULL, NULL, NULL),
+('Tulips_5f174de637144.jpg', '2020-07-07 09:33:11', NULL, 620888, 1, 21, 'Tulips.jpg', '', '', NULL, NULL, NULL),
+('IMG_20120725_112345_5f1de393785da.jpg', '2012-07-25 09:23:44', NULL, 962498, 1, 22, 'IMG_20120725_112345.jpg', '', '', '2.3374627', '48.8470886', 'Jardin du Luxembourg, Place Edmond Rostand, 75006 Paris, France');
 
 -- --------------------------------------------------------
 
@@ -102,6 +113,10 @@ CREATE TABLE `image_instances` (
   `image_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Схема на данните от таблица `image_instances`
+--
+
 INSERT INTO `image_instances` (`id`, `user_id`, `image_id`) VALUES
 (3, 1, 15),
 (4, 1, 16),
@@ -109,7 +124,8 @@ INSERT INTO `image_instances` (`id`, `user_id`, `image_id`) VALUES
 (6, 1, 18),
 (7, 1, 19),
 (8, 1, 20),
-(9, 1, 21);
+(9, 1, 21),
+(10, 1, 22);
 
 -- --------------------------------------------------------
 
@@ -182,28 +198,31 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `albums`
 --
 ALTER TABLE `albums`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `album_images`
+--
+ALTER TABLE `album_images`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `images`
 --
 ALTER TABLE `images`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `image_instances`
 --
 ALTER TABLE `image_instances`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
-ALTER TABLE `album_images`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Ограничения за дъмпнати таблици
@@ -233,5 +252,3 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
-ALTER TABLE `images` CHANGE `timestamp` `timestamp` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP;
